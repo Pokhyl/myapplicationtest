@@ -21,7 +21,7 @@ class AdapterRv(var list: List<TappticEntity>, var navController: NavController)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TappticViewHolder {
         val binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TappticViewHolder(binding, navController)
+        return TappticViewHolder( binding, navController)
     }
 
 

@@ -11,6 +11,6 @@ interface TappticApi {
 
      fun getList(): Flow<List<TappticEntity>>
      @GET("json.php")
-     fun getItem(@Query("name")id:String)
+     fun getItem(@Query("name")id:String):Flow<TappticEntity>
 
 }

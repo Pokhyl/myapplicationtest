@@ -9,8 +9,11 @@ import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplicationtest.databinding.FragmentListBinding
+import com.example.myapplicationtest.domain.TappticEntity
 import com.example.myapplicationtest.presentation.AdapterRv
 import com.example.myapplicationtest.presentation.TappticState
 import dagger.hilt.android.AndroidEntryPoint
@@ -32,7 +35,7 @@ class ListFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        var adapter = AdapterRv(listOf())
+        var adapter = AdapterRv(listOf(), findNavController())
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
         listViewModel.getData()
@@ -55,6 +58,7 @@ class ListFragment : Fragment() {
                         binding.progressBar.isVisible = false
                         Toast.makeText(binding.root.context, it.error,Toast.LENGTH_LONG).show()
                     }
+                    else -> {}
                 }
 
 

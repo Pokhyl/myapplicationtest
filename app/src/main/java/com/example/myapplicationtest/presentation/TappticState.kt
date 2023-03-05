@@ -8,4 +8,6 @@ sealed class TappticState {
     class Error(var error: String?): TappticState()
     object Loading: TappticState()
 
+    class SuccessItem(val tappticEntity: TappticEntity): TappticState()
+
 }

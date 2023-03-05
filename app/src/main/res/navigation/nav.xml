@@ -9,7 +9,11 @@
         android:id="@+id/itemFragment"
         android:name="com.example.myapplicationtest.presentation.item.ItemFragment"
         android:label="fragment_item"
-        tools:layout="@layout/fragment_item" />
+        tools:layout="@layout/fragment_item" >
+        <argument
+            android:name="TappticEntity"
+            app:argType="com.example.myapplicationtest.domain.TappticEntity" />
+    </fragment>
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.myapplicationtest.presentation.list.ListFragment"
