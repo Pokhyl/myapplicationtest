@@ -9,11 +9,7 @@
         android:id="@+id/itemFragment"
         android:name="com.example.myapplicationtest.presentation.item.ItemFragment"
         android:label="fragment_item"
-        tools:layout="@layout/fragment_item" >
-        <argument
-            android:name="TappticEntity"
-            app:argType="com.example.myapplicationtest.domain.TappticEntity" />
-    </fragment>
+        tools:layout="@layout/fragment_item" />
     <fragment
         android:id="@+id/listFragment"
         android:name="com.example.myapplicationtest.presentation.list.ListFragment"
@@ -23,9 +19,9 @@
         <action
             android:id="@+id/action_listFragment_to_itemFragment2"
             app:destination="@id/itemFragment">
-            <argument
-                android:name="TappticEntity"
-                app:argType="com.example.myapplicationtest.domain.TappticEntity" />
+<!--            <argument-->
+<!--                android:name="TappticEntity"-->
+<!--                app:argType="com.example.myapplicationtest.domain.TappticEntity" />-->
 
         </action>
     </fragment>

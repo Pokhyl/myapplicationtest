@@ -1,17 +1,22 @@
 package com.example.myapplicationtest.presentation
 
+import android.graphics.Color
 import android.view.LayoutInflater
+import android.view.MotionEvent
 import android.view.ViewGroup
 import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.myapplicationtest.databinding.ItemBinding
-import com.example.myapplicationtest.domain.TappticEntity
-import com.example.myapplicationtest.presentation.list.ListFragmentDirections
-import com.squareup.picasso.Picasso
 
-class AdapterRv(var list: List<TappticEntity>, var navController: NavController): RecyclerView.Adapter<AdapterRv.TappticViewHolder>() {
+import com.example.myapplicationtest.domain.TappticEntity
+import com.example.myapplicationtest.presentation.list.AdapterOnClickListener
+import com.squareup.picasso.Picasso
+import kotlinx.coroutines.coroutineScope
+import kotlinx.coroutines.delay
+
+class AdapterRv(var list: List<TappticEntity>, var adapterOnClickListener: AdapterOnClickListener): RecyclerView.Adapter<AdapterRv.TappticViewHolder>() {
     fun updateItems(newList: List<TappticEntity>) {
         val diffCallback: TappticAntityDiffCallback = TappticAntityDiffCallback(this.list, newList)
         val diffResult = DiffUtil.calculateDiff(diffCallback)
@@ -21,7 +26,7 @@ class AdapterRv(var list: List<TappticEntity>, var navController: NavController)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TappticViewHolder {
         val binding = ItemBinding.inflate(LayoutInflater.from(parent.context), parent, false)
-        return TappticViewHolder( binding, navController)
+        return TappticViewHolder( binding, adapterOnClickListener)
     }
 
 
@@ -35,18 +40,46 @@ class AdapterRv(var list: List<TappticEntity>, var navController: NavController)
     }
 
 
-    class TappticViewHolder(private val binding: ItemBinding,val navController: NavController) : ViewHolder(binding.root) {
-        fun bind(tappticEntity: TappticEntity) {
+    class TappticViewHolder(
+        private val binding: ItemBinding,
+        var adapterOnClickListener: AdapterOnClickListener
+    ) : ViewHolder(binding.root) {
+
+
+
+        fun bind( tappticEntity: TappticEntity) {
             binding.textView.text = tappticEntity.name
             Picasso.get().load(tappticEntity.image).into(binding.imageView)
             binding.conLayout.setOnClickListener {
-                val action = ListFragmentDirections.actionListFragmentToItemFragment2(tappticEntity)
-                navController.navigate(action)
-
+                adapterOnClickListener.onClick(tappticEntity)
             }
-        }
+            binding.conLayout.setOnTouchListener { v, event ->
+                when(event.action){
+                    MotionEvent.ACTION_DOWN -> {
+                        binding.conLayout.setBackgroundColor(Color.GRAY)
 
+                        true
+
+               }
+                    MotionEvent.ACTION_UP -> {
+                        binding.conLayout.setBackgroundColor(Color.GREEN)
+
+                        adapterOnClickListener.onClick(tappticEntity)
+
+                        true
+                    }
+                    MotionEvent.ACTION_CANCEL -> {
+                        binding.conLayout.setBackgroundColor(Color.WHITE)
+                        true
+                    }
+                    else -> false
+
+                }
+              }
+
+        }
     }
+
 }
 class TappticAntityDiffCallback(val oldList: List<TappticEntity>, val newList: List<TappticEntity> ): DiffUtil.Callback(){
     override fun getOldListSize(): Int {
