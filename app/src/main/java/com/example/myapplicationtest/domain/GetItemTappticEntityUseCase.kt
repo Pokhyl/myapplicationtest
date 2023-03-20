@@ -6,7 +6,6 @@ import javax.inject.Inject
 
 class GetItemTappticEntityUseCase @Inject constructor(val tappticApi: TappticApi) {
     fun invoke(item: String): Flow<TappticEntity> {
-        println("?????????????$item")
       return  tappticApi.getItem(item)
     }
 }

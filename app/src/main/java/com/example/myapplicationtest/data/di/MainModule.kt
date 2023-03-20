@@ -36,18 +36,7 @@ class MainModule {
     @Provides
     @Singleton
     fun okHttpCreate(): OkHttpClient {
-//        val retryInterceptor: RetryInterceptor = Builder()
-//            .maxRetryCount(3)
-//            .retryOnIOException(true)
-//            .build()
         return  OkHttpClient.Builder()
-//            .addInterceptor(
-//                retryInterceptor(
-//                    maxRetries = 3,
-//                    retryDelayMillis = 1000,
-//                    retryCondition = { throwable -> throwable is IOException }
-//                )
-//            )
             .build()
     }
 }

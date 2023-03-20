@@ -3,9 +3,7 @@ package com.example.myapplicationtest.presentation.list
 import android.content.Context
 import android.content.res.Configuration
 import android.net.ConnectivityManager
-import android.net.Network
 import android.net.NetworkCapabilities
-import android.net.NetworkInfo
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -20,13 +18,9 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.myapplicationtest.R
 import com.example.myapplicationtest.databinding.FragmentListBinding
 import com.example.myapplicationtest.domain.TappticEntity
-import com.example.myapplicationtest.presentation.AdapterRv
 import com.example.myapplicationtest.presentation.SharedViewModel
 import com.example.myapplicationtest.presentation.TappticState
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.retryWhen
-import java.io.IOException
 
 @AndroidEntryPoint
 
@@ -51,8 +45,6 @@ class ListFragment : Fragment(), AdapterOnClickListener {
         if (isNetworkConnected(requireContext())){
             listViewModel.getData()
         }else{
-            //binding.error.isVisible = true
-        //    binding.buttonrepit.isVisible = true
             listViewModel.getData()
             binding.error1.setOnClickListener {
                 listViewModel.getData()
@@ -102,7 +94,6 @@ class ListFragment : Fragment(), AdapterOnClickListener {
         listViewModel.getItem(tappticEntity.name)
         if (resources.configuration.orientation == Configuration.ORIENTATION_PORTRAIT){
 
-//            val action = ListFragmentDirections.actionListFragmentToItemFragment2()
             findNavController().navigate(R.id.itemFragment)
         }
     }

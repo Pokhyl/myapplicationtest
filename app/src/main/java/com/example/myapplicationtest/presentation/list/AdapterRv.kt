@@ -1,20 +1,17 @@
-package com.example.myapplicationtest.presentation
+package com.example.myapplicationtest.presentation.list
 
+
+import android.annotation.SuppressLint
 import android.graphics.Color
 import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.ViewGroup
-import androidx.navigation.NavController
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
 import androidx.recyclerview.widget.RecyclerView.ViewHolder
 import com.example.myapplicationtest.databinding.ItemBinding
-
 import com.example.myapplicationtest.domain.TappticEntity
-import com.example.myapplicationtest.presentation.list.AdapterOnClickListener
 import com.squareup.picasso.Picasso
-import kotlinx.coroutines.coroutineScope
-import kotlinx.coroutines.delay
 
 class AdapterRv(var list: List<TappticEntity>, var adapterOnClickListener: AdapterOnClickListener): RecyclerView.Adapter<AdapterRv.TappticViewHolder>() {
     fun updateItems(newList: List<TappticEntity>) {
@@ -46,26 +43,28 @@ class AdapterRv(var list: List<TappticEntity>, var adapterOnClickListener: Adapt
     ) : ViewHolder(binding.root) {
 
 
-
-        fun bind( tappticEntity: TappticEntity) {
+        @SuppressLint("ClickableViewAccessibility")
+        fun bind(tappticEntity: TappticEntity) {
             binding.textView.text = tappticEntity.name
             Picasso.get().load(tappticEntity.image).into(binding.imageView)
             binding.conLayout.setOnClickListener {
+
                 adapterOnClickListener.onClick(tappticEntity)
+
             }
             binding.conLayout.setOnTouchListener { v, event ->
-                when(event.action){
+                when (event.action) {
                     MotionEvent.ACTION_DOWN -> {
                         binding.conLayout.setBackgroundColor(Color.GRAY)
 
                         true
 
-               }
+                    }
                     MotionEvent.ACTION_UP -> {
-                        binding.conLayout.setBackgroundColor(Color.GREEN)
 
+                        binding.conLayout.setBackgroundColor(Color.WHITE)
                         adapterOnClickListener.onClick(tappticEntity)
-
+                        binding.conLayout.setBackgroundColor(Color.GREEN)
                         true
                     }
                     MotionEvent.ACTION_CANCEL -> {
@@ -75,11 +74,12 @@ class AdapterRv(var list: List<TappticEntity>, var adapterOnClickListener: Adapt
                     else -> false
 
                 }
-              }
+            }
 
         }
-    }
 
+
+    }
 }
 class TappticAntityDiffCallback(val oldList: List<TappticEntity>, val newList: List<TappticEntity> ): DiffUtil.Callback(){
     override fun getOldListSize(): Int {

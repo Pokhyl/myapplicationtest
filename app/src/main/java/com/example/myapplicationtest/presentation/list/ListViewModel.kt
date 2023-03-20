@@ -25,7 +25,6 @@ class ListViewModel @Inject constructor(val getTappticAntityUseCase: GetTappticE
                 .retryWhen { cause, attempt ->
                     if (cause is Exception && attempt < 3) {
                         delay(2000)
-                        println("??????????"+cause)
                         return@retryWhen true
                     } else {
                         return@retryWhen false
