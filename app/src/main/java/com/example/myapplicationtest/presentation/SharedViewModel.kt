@@ -24,7 +24,7 @@ class SharedViewModel @Inject constructor(val getItemTappticEntityUseCase: GetIt
             _sharedFlowList.emit(TappticState.Loading)
             getTappticEntityUseCase.invoke()
                 .retryWhen { cause, attempt ->
-                    if (cause is Exception && attempt < 0) {
+                    if (cause is Exception && attempt < 3) {
                         delay(2000)
                         println("??????????"+cause)
                         return@retryWhen true
